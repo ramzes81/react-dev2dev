@@ -7,11 +7,15 @@ function addDomEventListenerToElement(name, value, element) {
 }
 
 function addAttributeToElement(name, value, element) {
+  let attrName = name;
+  if (name === CONSTANTS.PROP_NAMES.CLASSNAME) {
+    attrName = 'class';
+  }
   if (typeof element.setAttribute === 'function') {
-    element.setAttribute(name, value);
+    element.setAttribute(attrName, value);
   } else {
     // eslint-disable-next-line
-    element[name] = value;
+    element[attrName] = value;
   }
   return element;
 }
