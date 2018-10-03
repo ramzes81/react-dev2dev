@@ -54,4 +54,5 @@ export function createElement(type, props, rootContainerElement) {
 
   const childDOMComponents = children.map(child => createElement(child.type, child.props));
 
+  return new ReactDOMComponent(dom, type, props, childDOMComponents);
 }
