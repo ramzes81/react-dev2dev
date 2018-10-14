@@ -8,7 +8,7 @@ function addDomEventListenerToElement(name, value, element) {
 
 function addAttributeToElement(name, value, element) {
   let attrName = name;
-  if (name === CONSTANTS.PROP_NAMES.CLASSNAME) {
+  if (name === PROP_NAMES.CLASSNAME) {
     attrName = 'class';
   }
   if (typeof element.setAttribute === 'function') {
@@ -45,14 +45,18 @@ export function createElement(type, props, rootContainerElement) {
   const isTextElement = type === Symbols.TEXT_ELEMENT;
 
   const dom = isTextElement
-    ? rootContainerElement.createTextNode(element.props[PROP_NAMES.CHILDREN])
+    ? rootContainerElement.createTextNode(props[PROP_NAMES.CHILDREN])
     : rootContainerElement.createElement(type);
 
   applyPropsToDom(dom, props);
 
-  const children = element.props[PROP_NAMES.CHILDREN] || [];
+  const children = props[PROP_NAMES.CHILDREN] || [];
 
-  const childDOMComponents = children.map(child => createElement(child.type, child.props));
+  const childDOMComponents = children.map(child =>
+    createElement(child.type, child.props, rootContainerElement));
+
+  const childDOMs = childDOMComponents.map(child => child.dom);
+  childDOMs.forEach(childDOM => dom.appendChild(childDOM));
 
   return new ReactDOMComponent(dom, type, props, childDOMComponents);
 }

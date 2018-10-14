@@ -1,5 +1,4 @@
-import Symbols from './../react/symbols';
-import CONSTANTS from './../react/constants';
+import Reconciler from './../react-reconciler/Reconciler';
 
 function ReactRoot(container) {
   this.root = Reconciler.createContainer(container);
@@ -22,6 +21,7 @@ function renderSubtreeIntoContainer(parentComponent, children, container) {
   let root = container._reactRootContainer;
 
   if (!root) {
+    // eslint-disable-next-line
     root = container._reactRootContainer = createRootFromDomContainer(container);
   }
 
@@ -32,7 +32,7 @@ function render(element, container) {
   return renderSubtreeIntoContainer(
     null,
     element,
-    container
+    container,
   );
 }
 
