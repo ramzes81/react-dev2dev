@@ -36,6 +36,7 @@ export function createInstance(type, props) {
   const dom = document.createElement(type);
 
   applyPropsToDom(dom, props);
+  return dom;
 }
 
 export function createTextInstance(text) {
@@ -44,4 +45,10 @@ export function createTextInstance(text) {
 
 export function appendChild(parent, child) {
   parent.appendChild(child);
+}
+
+export function flushContainer(container) {
+  while (container.lastChild) {
+    container.removeChild(container.lastChild);
+  }
 }

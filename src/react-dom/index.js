@@ -1,11 +1,14 @@
 import Reconciler from './../react-reconciler/Reconciler';
+import * as DOMRenderer from './DOMRenderer';
+
+const reconciler = new Reconciler(DOMRenderer);
 
 function ReactRoot(container) {
-  this.root = Reconciler.createContainer(container);
+  this.root = reconciler.createContainer(container);
 }
 
 ReactRoot.prototype.render = function (children) {
-  Reconciler.updateContainer(children, this.root);
+  reconciler.updateContainer(children, this.root);
 };
 
 function createRootFromDomContainer(container) {

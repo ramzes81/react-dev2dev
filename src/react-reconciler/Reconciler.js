@@ -1,27 +1,28 @@
-import { createElement } from './../react-dom/ReactDOMComponent';
+import instantiate from './instantiate';
+import ReactRoot from './ReactRoot';
 
-function Root(domContainer) {
-  this.domContainer = domContainer;
-  this.current = null;
-}
-
-function createContainer(container) {
-  return new Root(container);
-}
-
-function updateContainer(children, root) {
-  const nextElement = createElement(children.type, children.props, window.document);
-  if (root.current === null) {
-    root.domContainer.appendChild(nextElement.dom);
-  } else {
-    root.domContainer.replaceChild(nextElement.dom, root.domContainer.lastChild);
+export default class Reconciler {
+  constructor(renderer) {
+    this.renderer = renderer;
   }
+
   // eslint-disable-next-line
-  root.current = nextElement;
+  createContainer(container) {
+    return new ReactRoot(container);
+  }
+
+  updateContainer(children, root) {
+    const {
+      renderer,
+    } = this;
+    const nextElement = instantiate(children, renderer);
+    if (root.current === null) {
+      renderer.appendChild(root.container, nextElement.mount());
+    } else {
+      renderer.flushContainer(root.container);
+      renderer.appendChild(root.container, nextElement.mount());
+    }
+    // eslint-disable-next-line
+    root.current = nextElement;
+  }
 }
-
-
-export default {
-  createContainer,
-  updateContainer,
-};
