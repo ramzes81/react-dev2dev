@@ -39,6 +39,15 @@ function render(element, container) {
   );
 }
 
+function unmountComponentAtNode(container) {
+  return renderSubtreeIntoContainer(
+    null,
+    null,
+    container,
+  );
+}
+
 export default {
   render,
+  unmountComponentAtNode,
 };

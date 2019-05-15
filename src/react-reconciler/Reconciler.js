@@ -15,12 +15,15 @@ export default class Reconciler {
     const {
       renderer,
     } = this;
-    const nextElement = instantiate(children, renderer);
+    const nextElement = children && instantiate(children, renderer);
     if (root.current === null) {
       renderer.appendChild(root.container, nextElement.mount());
     } else {
+      root.current.unmount();
       renderer.flushContainer(root.container);
-      renderer.appendChild(root.container, nextElement.mount());
+      if (nextElement) {
+        renderer.appendChild(root.container, nextElement.mount());
+      }
     }
     // eslint-disable-next-line
     root.current = nextElement;

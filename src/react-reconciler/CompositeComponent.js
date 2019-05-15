@@ -27,4 +27,14 @@ export default class CompositeComponent {
 
     return renderedComponent.mount();
   }
+
+  unmount() {
+    if (this.publicInstance) {
+      if (this.publicInstance.componentWillUnmount) {
+        this.publicInstance.componentWillUnmount();
+      }
+    }
+
+    this.renderedComponent.unmount();
+  }
 }

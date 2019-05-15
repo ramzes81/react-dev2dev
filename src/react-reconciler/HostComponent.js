@@ -43,4 +43,8 @@ export default class HostComponent {
 
     return node;
   }
+
+  unmount() {
+    this.renderedChildren.forEach(child => child.unmount());
+  }
 }

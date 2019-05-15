@@ -8,4 +8,10 @@ function renderTime() {
   ReactDOM.render(time, document.getElementById('app'));
 }
 
-setInterval(renderTime, 1000);
+const interval = setInterval(renderTime, 1000);
+
+setTimeout(() => {
+  clearInterval(interval);
+
+  ReactDOM.unmountComponentAtNode(document.getElementById('app'));
+}, 5000);
